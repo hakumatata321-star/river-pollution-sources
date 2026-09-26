@@ -2,13 +2,13 @@
 
 ## Overview
 
-This dataset contains 300 synthetic river catchments, each observed for 60 days. Each catchment records its river network, the positions of its water-quality sondes, hourly rainfall and outlet flow, the storm overflow, treatment works and trade effluent releases that were recorded upstream, and every pollution spike the sondes logged. The source of each spike, either a specific recorded release or something unrecorded, is kept in a separate table and is the quantity of interest.
+This dataset contains 500 synthetic river catchments, each observed for 60 days. Each catchment records its river network, the positions of its water-quality sondes, hourly rainfall and outlet flow, the storm overflow, treatment works and trade effluent releases that were recorded upstream, and every pollution spike the sondes logged. The source of each spike, either a specific recorded release or something unrecorded, is kept in a separate table and is the quantity of interest.
 
 Nothing here is observed in any real river. Every catchment, release, spike, identifier and hourly value is produced by a generator whose draws are HMAC-SHA256 keyed to a withheld 256-bit secret, so no part of the release can be regenerated or matched against any public archive.
 
 ## Release At A Glance
 
-- 300 catchments, 1,223 river reaches, 1,763 sondes, 29,701 recorded releases, 83,841 recorded spikes.
+- 500 catchments, 2,028 river reaches, 2,936 sondes, 48,928 recorded releases, 141,599 recorded spikes.
 - A main river of 50 to 90 km and two to four tributaries of 15 to 40 km in each catchment.
 - 60 days of hourly rainfall and outlet flow per catchment.
 - Releases are storm overflow spills, treatment works storm spills and operator-reported trade effluent releases.
