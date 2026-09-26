@@ -8,11 +8,11 @@ Nothing here is observed in any real river. Every catchment, release, spike, ide
 
 ## Release At A Glance
 
-- 500 catchments, 2,028 river reaches, 2,936 sondes, 48,928 recorded releases, 141,599 recorded spikes.
+- 500 catchments, 2,028 river reaches, 2,936 sondes, 48,928 recorded releases, 137,847 recorded spikes.
 - A main river of 50 to 90 km and two to four tributaries of 15 to 40 km in each catchment.
-- 60 days of hourly rainfall and outlet flow per catchment.
+- 60 days of hourly outlet flow and of rainfall per catchment.
 - Releases are storm overflow spills, treatment works storm spills and operator-reported trade effluent releases.
-- Each spike has a peak hour, peak excesses of ammonium, conductivity and turbidity, and a duration.
+- Each spike has a peak hour, the peak ammonium, conductivity and turbidity readings, and a duration; each sonde has its usual dry-weather readings.
 - A catchment is the independent unit: its network, releases and spikes belong to it alone.
 
 ## How The Data Was Generated
@@ -25,14 +25,17 @@ The settings follow published studies of storm overflow spill frequency and dura
 
 ## Raw File Structure
 
-The uploaded ZIP is flat and contains exactly these ten files at its root:
+The uploaded ZIP is flat and contains exactly these thirteen files at its root:
 
-- `catchments.csv`: one record per catchment: `catchment_id`, `n_reaches`, `n_stations`, `n_releases`, `n_spikes`.
-- `reaches.csv`: one record per reach: `catchment_id`, `reach_id` (`main` for the main river), `length_km`, `joins_main_at_km` (empty for the main river).
-- `stations.csv`: one record per sonde: `catchment_id`, `station_id`, `reach_id`, `km`.
-- `releases.csv`: one record per recorded release: `release_id`, `catchment_id`, `kind` (`overflow`, `works` or `trade`), `site_id`, `reach_id`, `km`, `hour`, `size` (spill duration in hours for overflow and works, reported volume in cubic metres for trade).
+- `catchments.csv`: one record per catchment: `catchment_id`, `main_length_km`, `n_tributaries`, `n_stations`, `n_releases`, `n_spikes`.
+- `reaches.csv`: one record per tributary: `catchment_id`, `reach_id`, `length_km`, `joins_main_at_km`. The main river of each catchment has `reach_id` `main` and its length is in `catchments.csv`.
+- `stations.csv`: one record per sonde: `catchment_id`, `station_id`, `reach_id`, `km`, `baseline_ammonium_mg_l`, `baseline_conductivity_us_cm`, `baseline_turbidity_ntu`.
+- `releases.csv`: one record per recorded release: `release_id`, `catchment_id`, `kind` (`overflow`, `works` or `trade`), `site_id`, `reach_id`, `km`, `hour` (spill start for overflow and works, reported hour for trade).
+- `spill_durations.csv`: one record per overflow or works spill: `release_id`, `catchment_id`, `duration_h`.
+- `trade_volumes.csv`: one record per trade release: `release_id`, `catchment_id`, `volume_m3` (reported volume).
 - `spikes.csv`: one record per recorded spike: `spike_id`, `catchment_id`, `station_id`, `peak_hour`, `ammonium_mg_l`, `conductivity_us_cm`, `turbidity_ntu`, `duration_h`.
-- `hydrology.csv`: one record per catchment and hour: `catchment_id`, `hour` (0 to 1439), `rain_mm`, `outlet_flow_m3s`.
+- `flow.csv`: one record per catchment and hour: `catchment_id`, `hour` (0 to 1439), `outlet_flow_m3s`.
+- `rain.csv`: one record per catchment and hour with rain: `catchment_id`, `hour`, `rain_mm`; hours not listed had no rain.
 - `sources.csv`: one creator-side record per spike: `spike_id`, `catchment_id`, `source`, which is `unattributed` or `<kind>:<release_id>`; used by `prepare.py` and never copied into public prepared data for the test catchments.
 - `LICENSE`: CC BY 4.0 notice and licence URL.
 - `DATASET_DESCRIPTION.md`: this description, shipped inside the archive so the card and the data cannot drift apart.
