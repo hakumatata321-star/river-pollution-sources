@@ -36,7 +36,7 @@ The uploaded ZIP is flat and contains exactly these thirteen files at its root:
 - `spikes.csv`: one record per recorded spike: `spike_id`, `catchment_id`, `station_id`, `peak_hour`, `ammonium_mg_l`, `conductivity_us_cm`, `turbidity_ntu`, `duration_h`.
 - `flow.csv`: one record per catchment and hour: `catchment_id`, `hour` (0 to 1439), `outlet_flow_m3s`.
 - `rain.csv`: one record per catchment and hour with rain: `catchment_id`, `hour`, `rain_mm`; hours not listed had no rain.
-- `sources.csv`: one creator-side record per spike: `spike_id`, `catchment_id`, `source`, which is `unattributed` or `<kind>:<release_id>`; used by `prepare.py` and never copied into public prepared data for the test catchments.
+- `sources.csv`: one creator-side record per spike: `spike_id`, `catchment_id`, `source`, which is `unattributed` or `<kind>:<release_id>`; used by `prepare.py`, which publishes it for every training spike and, for the test catchments, only for the spikes that peak before hour 288, which serve as labelled support; the later test spikes are scored and their sources are never published.
 - `LICENSE`: CC BY 4.0 notice and licence URL.
 - `DATASET_DESCRIPTION.md`: this description, shipped inside the archive so the card and the data cannot drift apart.
 - `PACKAGE_MANIFEST.sha256`: SHA-256 checksum of every other file in the package.
