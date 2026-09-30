@@ -17,7 +17,7 @@ Nothing here is observed in any real river. Every catchment, release, spike, ide
 
 ## How The Data Was Generated
 
-Rain storms cross each catchment and raise the flow. When enough rain falls, storm overflows and treatment works spill, each for a while, and factories occasionally release trade effluent. Other pollution enters without any record: runoff from land during storms, misconnected drains, unmonitored discharges, and spills whose monitors failed. Each plume travels down the network at a speed that rises with flow, spreads out as it goes, and is diluted by the flow it joins. Ammonium and turbidity are partly lost along the way while conductivity is not. A sonde records a spike when a plume passes it strongly enough, and two plumes arriving together are recorded as one spike.
+Every file in this package is written by `gen.py`, which is included; given the withheld secret, `python gen.py <folder>` reproduces the release exactly. Rain storms cross each catchment and raise the flow. When enough rain falls, storm overflows and treatment works spill, each for a while, and factories occasionally release trade effluent. Other pollution enters without any record: runoff from land during storms, misconnected drains, unmonitored discharges, and spills whose monitors failed. Each plume travels down the network at a speed that rises with flow, spreads out as it goes, and is diluted by the flow it joins. Ammonium and turbidity are partly lost along the way while conductivity is not. A sonde records a spike when a plume passes it strongly enough, and two plumes arriving together are recorded as one spike.
 
 A spike's recorded source is the recorded release that contributed most to it when that release is upstream of the sonde within 60 km of river and was recorded no more than 120 hours before the spike's peak. Otherwise it is `unattributed`.
 
@@ -36,7 +36,7 @@ The uploaded ZIP is flat and contains exactly these fourteen files at its root:
 - `spikes.csv`: one record per recorded spike: `spike_id`, `catchment_id`, `station_id`, `peak_hour`, `ammonium_mg_l`, `conductivity_us_cm`, `turbidity_ntu`, `duration_h`.
 - `flow.csv`: one record per catchment and hour: `catchment_id`, `hour` (0 to 1439), `outlet_flow_m3s`.
 - `rain.csv`: one record per catchment and hour with rain: `catchment_id`, `hour`, `rain_mm`; hours not listed had no rain.
-- `sources.csv`: one creator-side record per spike: `spike_id`, `catchment_id`, `source`, which is `unattributed` or `<kind>:<release_id>`; used by `prepare.py`, which publishes it for every training spike and, for the test catchments, only for the spikes that peak before hour 288, which serve as labelled support; the later test spikes are scored and their sources are never published.
+- `sources.csv`: one creator-side record per spike: `spike_id`, `catchment_id`, `source`, which is `unattributed` or `<kind>:<release_id>`; published by the challenge for every training spike and, in the test catchments, only for the spikes that peak before hour 288, which serve as labelled support; the sources of the later test spikes are scored and never published.
 - `gen.py`: the generator that produced every file here, without its secret; `python gen.py <folder>` writes the release given the secret.
 - `LICENSE`: CC BY 4.0 notice and licence URL.
 - `DATASET_DESCRIPTION.md`: this description, shipped inside the archive so the card and the data cannot drift apart.
